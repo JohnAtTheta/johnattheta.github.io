@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class="no-js" lang="EN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Theta Halloween v0.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      .containerDiv {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 95vh;
+      }
+
+      .playVideoButton {
+        width: 300px;
+        height: 150px;
+      }
+
+      .stopVideoButton {
+        background: transparent;
+        border: none;
+        display: none;
+        min-width: 96vw;
+        min-height: 96vh;
+      }
+
+      .halloweenVideo {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -100;
+      }
+
+      .display-block {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"
+      integrity="sha512-8Q6Y9XnTbOE+JNvjBQwJ2H8S+UV4uA6hiRykhdtIyDYZ2TprdNmWOUaKdGzOhyr4dCyk287OejbPvwl7lrfqrQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"
+      integrity="sha512-MOCpqoRoisCTwJ8vQQiciZv0qcpROCidek3GTFS6KTk2+y7munJIlKCVkFCYY+p3ErYFXCjmFjnfTTRSC1OHWQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"
+      integrity="sha512-ND11pbmp3M3Wldj90In1EUlHIt8T7O6FykizQ/yXrFjHtpX+D0SX+/IVeLjqAV91r/Lavq4BpWJIC0nUtw5Kvw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script type="text/javascript">
+      const removeWatermark = () => {
+        const ids = [];
+        const iframes = document.body.querySelectorAll('iframe');
+
+        for (const iframe of iframes) {
+          if (iframe.id.startsWith('sb__open-sandbox'))
+            ids.push(iframe.id);
+        }
+        
+        for (const id of ids) {
+          const node = document.createElement('div');
+
+          node.style.setProperty('display', 'none', 'important');
+          node.id = id;
+          document.getElementById(id).remove();
+          document.body.appendChild(node);
+        }
+      };
+    </script>
+    <script type="text/babel">
+      const halloweenVideoSourceUrl = 'https://www.w3schools.com/html/mov_bbb.mp4';
+      const App = () => {
+        const [isLoading, setIsLoading] = React.useState(true);
+        const [isPlayingHalloweenVideo, setIsPlayingHalloweenVideo] = React.useState(false);
+        const halloweenVideoRef = React.useRef(null);
+        const togglePlayingHalloweenVideo = () => {
+          const halloweenVideo = halloweenVideoRef.current;
+
+          halloweenVideo.currentTime = 0;
+          !isPlayingHalloweenVideo
+            ? halloweenVideo.play()
+            : halloweenVideo.pause();
+          setIsPlayingHalloweenVideo(!isPlayingHalloweenVideo);
+        };
+
+        React.useEffect(() => {
+          const timeoutId = window.setTimeout(removeWatermark, 1000);
+
+          if (isLoading) {
+            removeWatermark();
+            setIsLoading(false);
+          }
+
+          return () => {
+            if (timeoutId)
+              window.clearTimeout(timeoutId);
+          };
+        }, [isLoading]);
+
+        return (
+          <div className="containerDiv">
+            {isLoading
+              ? <h3>Loading...</h3>
+              : <React.Fragment>
+                  {!isPlayingHalloweenVideo && <button
+                    type="button"
+                    className="playVideoButton"
+                    onClick={togglePlayingHalloweenVideo}
+                  >Click here &gt;&gt;&gt;</button>}
+              </React.Fragment>
+            }
+            <button
+              type="button"
+              className={`stopVideoButton${isPlayingHalloweenVideo ? ' display-block' : ''}`}
+              onClick={togglePlayingHalloweenVideo}
+            >
+              <video
+                className="halloweenVideo"
+                ref={halloweenVideoRef}
+              >
+                <source
+                  src={halloweenVideoSourceUrl}
+                ></source>
+              </video>
+            </button>
+          </div>
+        );
+      };
+      const container = document.getElementById('root');
+      const root = ReactDOM.createRoot(container);
+
+      root.render(<React.StrictMode>
+        <App />
+      </React.StrictMode>);
+    </script>
+    <!--
+      Note: this page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      Read this page for starting a new React project with JSX:
+      https://react.dev/learn/start-a-new-react-project
+
+      Read this page for adding React with JSX to an existing project:
+      https://react.dev/learn/add-react-to-an-existing-project
+    -->
+  </body>
+</html>
