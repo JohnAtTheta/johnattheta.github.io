@@ -2,9 +2,24 @@
 <html class="no-js" lang="EN">
   <head>
     <meta charset="UTF-8" />
-    <title>Theta Halloween v0.0.2</title>
+    <title>Theta Halloween v0.0.3</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
+      @font-face {
+        font-family: witch-mystery-font;
+        src: url('witch-mystery.otf') format('opentype');
+      }
+
+      body {
+        background-color: black;
+        background-image: url(halloween-background-2560x1080.jpg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        min-width: 99vw;
+        min-height: 98vh;
+      }
+      
       .containerDiv {
         display: flex;
         justify-content: center;
@@ -13,8 +28,17 @@
       }
 
       .playVideoButton {
-        width: 300px;
-        height: 150px;
+        width: 600px;
+        height: 400px;
+        background-color: black;
+        background-image: url(blood-splatter.gif);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        font-family: witch-mystery-font, sans-serif;
+        font-size: 49pt;
+        color: white;
+        border-radius: 20px;
       }
 
       .stopVideoButton {
