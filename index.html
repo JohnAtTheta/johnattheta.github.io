@@ -87,14 +87,14 @@
         const [isLoading, setIsLoading] = React.useState(true);
         const [isPlayingHalloweenVideo, setIsPlayingHalloweenVideo] = React.useState(false);
         const halloweenVideoRef = React.useRef(null);
-        const togglePlayingHalloweenVideo = () => {
+        const togglePlayingHalloweenVideo = (playVideo) => {
           const halloweenVideo = halloweenVideoRef.current;
 
           halloweenVideo.currentTime = 0;
-          !isPlayingHalloweenVideo
+          playVideo
             ? halloweenVideo.play()
             : halloweenVideo.pause();
-          setIsPlayingHalloweenVideo(!isPlayingHalloweenVideo);
+          setIsPlayingHalloweenVideo(playVideo);
         };
 
         React.useEffect(() => {
@@ -119,17 +119,18 @@
                   {!isPlayingHalloweenVideo && <button
                     type="button"
                     className="playVideoButton"
-                    onClick={togglePlayingHalloweenVideo}
-                  >Click here &gt;&gt;&gt;</button>}
+                    onClick={() => togglePlayingHalloweenVideo(true)}
+                  >Press here if you are Brave Enough...</button>}
               </React.Fragment>
             }
             <button
               type="button"
               className={`stopVideoButton${isPlayingHalloweenVideo ? ' display-block' : ''}`}
-              onClick={togglePlayingHalloweenVideo}
+              onClick={() => togglePlayingHalloweenVideo(false)}
             >
               <video
                 className="halloweenVideo"
+                onEnded={() => togglePlayingHalloweenVideo(false)}
                 ref={halloweenVideoRef}
               >
                 <source
