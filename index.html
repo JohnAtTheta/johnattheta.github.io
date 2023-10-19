@@ -2,8 +2,35 @@
 <html class="no-js" lang="EN">
   <head>
     <meta charset="UTF-8" />
-    <title>Theta Halloween v0.0.3</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Theta Halloween v0.0.4</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+    <link
+      rel="preload"
+      href="witch-mystery.otf"
+      as="font"
+      type="font/opentype"
+    />
+    <link
+      rel="preload"
+      href="halloween-background-2560x1080.jpg"
+      as="image"
+      type="image/jpeg"
+    />
+    <link
+      rel="preload"
+      href="blood-splatter.gif"
+      as="image"
+      type="image/gif"
+    />
+    <link
+      rel="preload"
+      href="halloween-video.mp4"
+      as="video"
+      type="video/mp4"
+    />
     <style>
       @font-face {
         font-family: witch-mystery-font;
@@ -106,7 +133,6 @@
       };
     </script>
     <script type="text/babel">
-      const halloweenVideoSourceUrl = 'https://www.w3schools.com/html/mov_bbb.mp4';
       const App = () => {
         const [isLoading, setIsLoading] = React.useState(true);
         const [isPlayingHalloweenVideo, setIsPlayingHalloweenVideo] = React.useState(false);
@@ -158,7 +184,7 @@
                 ref={halloweenVideoRef}
               >
                 <source
-                  src={halloweenVideoSourceUrl}
+                  src="halloween-video.mp4"
                 ></source>
               </video>
             </button>
